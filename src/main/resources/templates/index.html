@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>首页</h1>
+<!--  若未登陆成功显示登录按钮 -->
+<div th:if="${session.loginUser}==null">
+    <a th:href="@{/login}">
+        <button>去登陆</button>
+    </a>
+</div>
+<!--  若登陆成功显示退出登录按钮 -->
+<div th:if="${session.loginUser}!=null">
+    <a th:href="@{/logout}">
+        <button>退出登录</button>
+    </a>
+</div>
+<p>----------------------------------------------------------------------------------</p>
+<div>
+    <p th:text="${msg}"></p>
+    <a th:href="@{/user/select}">查询</a>
+    <!--  /user/add 必须登陆才能访问，判断是否登陆成功  -->
+    <a th:if="${session.loginUser}!=null" th:href="@{/user/add}">添加</a>
+    <shiro:hasPermission name="user:add"><a th:href="@{/user/update}">修改</a></shiro:hasPermission>
+    <a shiro:hasPermission="user:delete" th:href="@{/user/delete}">删除</a>
+    <a shiro:hasPermission="user:update,user:delete" th:href="@{/user/vip}">VIP</a>
+</div>
+<div>
+    <shiro:hasRole name="vip2">
+        <h1>角色权限</h1>
+        <a th:href="@{/user/vip2}">VIP2</a>
+    </shiro:hasRole>
+</div>
+</body>
+</html>
