@@ -69,7 +69,7 @@ public class ShiroConfig {
         return new UserRealm();
     }
 
-    // 整合 shiroDialect
+    // 整合 shiroDialect, html 使用 thymeleaf-extras-shiro 标签
     @Bean
     public ShiroDialect getShiroDialect(){
         return new ShiroDialect();
